@@ -83,7 +83,7 @@ app.post('/AddUser', function (req, res, next) {
 
 app.post('/Login',function (req, res, next) {
     connection.execute(
-        'SELECT * FROM user WHERE id = ? AND pass = ?',
+        'SELECT (name,sname.email,tel,id_card,address) FROM user WHERE id = ? AND pass = ?',
         [req.body.id,req.body.pass],
         function(err, results, fields) {
             if (err) {
