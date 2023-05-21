@@ -114,20 +114,15 @@ app.post('/AddSubject', function (req, res, next) {
     );
 })
 
-app.post('/DeleteSubject', function (req, res, next) {
-    connection.execute(
-        'DELETE * FROM `subject` WHERE s_id = ?',
+app.delete('/DeleteSubject', function (req, res, next) {
+    connection.query(
+      'DELETE FROM `subject` WHERE s_id = ?',
       [req.body.s_id],
-        function (err, results) {
-            if (err) {
-                console.log(err);
-                return
-            }
-                res.json({status: "Success!", message:results});
-            
-        }
+      function(err, results) {
+        res.json(results);
+      }
     );
-})
+  })
 
 app.post('/UpdateSubject', function (req, res, next) {
     const token = req.headers.authorization.split(" ")[1];
