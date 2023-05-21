@@ -66,7 +66,6 @@ app.post('/UpdateUser', function (req, res, next) {
     );
 })
 
-
 app.post('/AddUser', function (req, res, next) {
     connection.execute(
         'INSERT INTO user (id,pass,name,sname,email,tel,id_card) VALUES (?,?,?,?,?,?,?)',
@@ -91,9 +90,8 @@ app.post('/Login',function (req, res, next) {
                 res.json({status: 'error', message: err})
                 return
             } else if(results.length > 0){
-                const token = jwt.sign({email: results[0].email}, secret, { expiresIn: '1h' });
-                res.json({status: 'ok', message: "Login Success!" ,token: token, data: results[0].email})
-
+                const token = jwt.sign({id: results[0].id}, secret, { expiresIn: '1h' });
+                res.json({status: 'ok', message: "Login Success!" ,token: token, user: results[0].id})
             }else{
                 res.json({status: 'error', message: 'Something Was Wrong!'})
             }
