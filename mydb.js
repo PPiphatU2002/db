@@ -120,9 +120,9 @@ app.delete('/DeleteSubject', function (req, res, next) {
   })
 
 app.put('/SubjectUpdate', function (req, res, next) {
-    connection.execute(
+    connection.query(
       'UPDATE `subject` SET  `s_name` = ?, `faculty` = ?, `cost` = ?, `photo` = ?, `time` = ?, `day` = ?, `credit` = ? WHERE s_id = ?',
-      [req.body.s_name, req.body.faculty, req.body.cost,req.body.photo,req.body.time,req.body.day,req.body.credit, req.body.s_id],
+      [req.body.s_name, req.body.faculty, req.body.cost, req.body.photo, req.body.time, req.body.day, req.body.credit, req.body.s_id],
       function(err, results) {
         res.json(results);
       }
