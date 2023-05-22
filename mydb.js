@@ -111,7 +111,7 @@ app.post('/AddSubject', function (req, res, next) {
 
 app.delete('/DeleteSubject', function (req, res, next) {
     connection.query(
-      'DELETE FROM `subject` WHERE s_id = ?',
+      'DELETE * FROM `subject` WHERE s_id = ?',
       [req.body.s_id],
       function(err, results) {
         res.json(results);
