@@ -100,19 +100,14 @@ app.post('/Login',function (req, res, next) {
 })
 
 app.post('/AddSubject', function (req, res, next) {
-    connection.execute(
-        'INSERT INTO subject (s_id,s_name,faculty,cost,photo,time,day,credit) VALUES (?,?,?,?,?,?,?,?)',
-        [req.body.s_id,req.body.s_name,req.body.faculty,req.body.cost,req.body.photo,req.body.time,req.body.day,req.body.credit],
-        function (err, results) {
-            if (err) {
-                console.log(err);
-                return
-            }
-                res.json({status: "Success!", message:results});
-            
-        }
+    connection.query(
+      'INSERT INTO `subject`(`s_id`, `s_name`, `faculty`, `cost`, `photo`, `time`, `day`, `credit`) VALUES (?, ?, ?, ?,?, ?, ?, ?)',
+      [req.body.s_id, req.body.s_name, req.body.faculty, req.body.cost,req.body.photo,req.body.time,req.body.day,req.body.credit],
+      function(err, results) {
+        res.json(results);
+      }
     );
-})
+  })
 
 app.delete('/DeleteSubject', function (req, res, next) {
     connection.query(
@@ -124,23 +119,15 @@ app.delete('/DeleteSubject', function (req, res, next) {
     );
   })
 
-app.post('/UpdateSubject', function (req, res, next) {
-    const token = req.headers.authorization.split(" ")[1];
-    console.log(token);
-    var decoded = jwt.verify(token, secret);
-    console.log(decoded.s_id);
-    connection.execute(
-        'UPDATE `subject` SET `s_name` = ?, `faculty` = ?, `cost` = ?, `photo` = ?, `time` = ?, `day` = ?, `credit` = ? WHERE s_id = ?',
-        [req.body.s_name, req.body.faculty, req.body.cost, req.body.photo, req.body.time, req.body.day,req.body.credit,decoded.s_id],
-        function (err, results) {
-            if (err) {
-                console.log(err);
-            }else{
-                res.json({status: "Success!", message:results});
-            }
-        }
+app.put('/SubjectUpdate', function (req, res, next) {
+    connection.query(
+      'UPDATE `subject` SET `s_id` = ?, `s_name` = ?, `faculty` = ?, `cost` = ?, `photo` = ?, `time` = ?, `day` = ?, `credit` = ? WHERE s_id = ?',
+      [req.body.s_id, req.body.s_name, req.body.faculty, req.body.cost,req.body.photo,req.body.time,req.body.day,req.body.credit, req.body.s_id],
+      function(err, results) {
+        res.json(results);
+      }
     );
-})
+  })
 
 app.get('/GetSubject/', function (req, res, next) {
     try {
